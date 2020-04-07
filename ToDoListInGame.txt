@@ -1,0 +1,10 @@
+player movements WSAD
+player jump
+player shoot
+camera view around the player
+isometric view
+bush grab and drag
+artellary
+health bar
+camera follow
+
