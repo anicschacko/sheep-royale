@@ -7,16 +7,18 @@ public class Player : MonoBehaviour
 {
     public float playerSpeed;
     public event Action OnPlayerHide;
+    public bool canMove;
 
     private bool isGrounded;
-    private bool canMove;
+    private Rigidbody rb;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         canMove = true;
-        isGrounded = true;   
+        isGrounded = true;
     }
 
     // Update is called once per frame
@@ -27,20 +29,22 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        if(canMove)
-            transform.position += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * playerSpeed * Time.deltaTime;
+        if (canMove)
+            rb.velocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * playerSpeed;
+        //transform.position += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * playerSpeed * Time.deltaTime;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Bush")
         {
-            Debug.Log("Collided");
-            this.gameObject.SetActive(false);   
-            OnPlayerHide?.Invoke();
-            canMove = false;
-        }       
-
-            
+            if (Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("Collided");
+                this.gameObject.SetActive(false);
+                OnPlayerHide?.Invoke();
+                canMove = false;
+            }
+        }
     }
 }

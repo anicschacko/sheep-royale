@@ -24,13 +24,20 @@ public class BushBehaviour : MonoBehaviour
     void Update()
     {
         if (shouldMove)
+        {
             Movement();
+            if (Input.GetMouseButtonDown(0))
+            {
+                player.gameObject.SetActive(true);
+                player.transform.SetParent(null);
+                shouldMove = false;
+                player.canMove = true;
+            }
+        }
     }
 
     void Movement()
     {
-        transform.position += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * 5f * Time.deltaTime;
+        transform.position += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * 3f * Time.deltaTime;
     }
-
-
 }
